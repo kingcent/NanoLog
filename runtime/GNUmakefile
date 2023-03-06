@@ -4,6 +4,12 @@
 # To build the Preprocessor version of the library, see ../NanoLogMakeFrag
 ###
 
+# 宏定义
+# 设置后CPU使用率会降低，但日志文件不能正常生成
+# DEFS = -DBENCHMARK_DISCARD_ENTRIES_AT_STAGINGBUFFER
+DEFS = ""
+CFLAGS += $(DEFS)
+
 # Common Sources
 SRCS=Cycles.cc Util.cc Log.cc NanoLog.cc RuntimeLogger.cc TimeTrace.cc
 OBJECTS:=$(SRCS:.cc=.o)
@@ -18,7 +24,7 @@ TEST_BUILD_DIR=test_build
 GTEST_DIR="../googletest/googletest"
 INCLUDES=-I. -ItestHelper -I${GTEST_DIR}/include
 LIBS=-L. -lgtest -lrt -pthread
-CXX_ARGS=-std=c++17 -g -O3
+CXX_ARGS=-std=c++17 -g -O3 $(CFLAGS)
 CXX?=g++
 
 all: decompressor libNanoLog.a
